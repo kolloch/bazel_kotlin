@@ -1,0 +1,31 @@
+load("@rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_jvm_external//:defs.bzl", "artifact")
+
+kt_jvm_library(
+    name = "SomeTest_lib",
+    srcs = ["SomeTest.kt"],
+    testonly = True,
+    deps = [
+        "//kotlin/net/eigenvalue/example/lib",
+        artifact("io.kotest:kotest-runner-junit5-jvm"),
+        artifact("io.kotest:kotest-assertions-core-jvm"),
+        artifact("io.kotest:kotest-framework-api-jvm"),
+    ],
+)
+
+java_test(
+    name = "SomeTest",
+    main_class = "org.junit.platform.console.ConsoleLauncher",
+    use_testrunner = False,
+    args = ["--select-class=net.eigenvalue.example.lib.SomeTest"],
+    runtime_deps = [
+        ":SomeTest_lib",
+        artifact("org.junit.platform:junit-platform-console-standalone"),  # keep
+        artifact("org.apache.logging.log4j:log4j-core"),
+        artifact("org.apache.logging.log4j:log4j-api"),
+        artifact("io.kotest:kotest-runner-junit5-jvm"),
+        artifact("org.junit.jupiter:junit-jupiter-api"),
+        artifact("org.junit.jupiter:junit-jupiter-params"),
+        artifact("org.apache.logging.log4j:log4j-slf4j2-impl"),
+    ],
+)

@@ -1,0 +1,43 @@
+load("@rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_java//java:defs.bzl", "java_binary")
+load("@rules_jvm_external//:defs.bzl", "artifact")
+load("@rules_java//java:defs.bzl", "java_library")
+
+kt_jvm_library(
+    name = "example_lib",
+    srcs = glob(["*.kt"]),
+    deps = [
+        "//kotlin/net/eigenvalue/example/lib",
+        artifact('io.ktor:ktor-server-core-jvm'),
+        artifact('io.ktor:ktor-http'),
+        artifact('io.ktor:ktor-server-netty-jvm'),
+        artifact('org.apache.logging.log4j:log4j-api'),
+    ],
+)
+
+java_library(
+    name = "log4j-config",
+    resource_strip_prefix = package_name(),
+    resources = [
+        "log4j2.xml",
+    ],
+    runtime_deps = [
+        artifact("org.fusesource.jansi:jansi"),
+    ],
+)
+
+# Why not kt_jvm_binary?
+#
+# https://bazelbuild.github.io/rules_kotlin/kotlin#kt_jvm_binary
+# > This rule does not have all of the features found in [`java_binary`](https://docs.bazel.build/versions/master/be/java.html#java_binary).
+# > It is appropriate for building workspace utilities. `java_binary` should be preferred for release artefacts.
+java_binary(
+    name = "example",
+    runtime_deps = [
+        ":example_lib",
+        ":log4j-config",
+        artifact('org.apache.logging.log4j:log4j-slf4j-impl'),
+        artifact('org.apache.logging.log4j:log4j-slf4j2-impl')
+    ],
+    main_class = "net.eigenvalue.example.MainKt",
+)

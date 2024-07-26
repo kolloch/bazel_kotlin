@@ -1,0 +1,21 @@
+# Don't depend on a JAVA_HOME pointing at a system JDK in repo rules
+# see https://github.com/bazelbuild/rules_jvm_external/issues/445
+build --repo_env=JAVA_HOME=../bazel_tools/jdk
+
+# Supposedly faster but will result in full rebuild
+startup --digest_function=BLAKE3
+
+common --strategy=KotlinCompile=worker
+
+# Hermetic java
+common --java_runtime_version=remotejdk_17
+common --tool_java_runtime_version=remotejdk_17
+
+# https://github.com/bazelbuild/bazel/issues/3236#issuecomment-587752609
+# https://github.com/raphw/byte-buddy/issues/1111#issuecomment-922459025
+common --sandbox_tmpfs_path=/tmp
+
+# Introduced in Bazel 7.
+common --incompatible_enable_proto_toolchain_resolution
+
+common --enable_bzlmod
