@@ -13,7 +13,7 @@ This repository supports [direnv](https://direnv.net/).
 Usage:
 
 1. Setup direnv
-2. direnv allow
+2. Run `direnv allow`
 3. Follow instructions and run `bazel run //env`
 
 ## First steps
