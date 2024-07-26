@@ -1,6 +1,6 @@
 # Bazel
 
-bazel-*
+/bazel-*
 
 # Compiled class file
 *.class
@@ -27,7 +27,7 @@ bazel-*
 hs_err_pid*
 replay_pid*
 
-.ijwb
+/.ijwb
 
 # direnv
-.direnv
+/.direnv

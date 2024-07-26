@@ -1,0 +1,15 @@
+name: bazel test
+on: [push]
+jobs:
+  bazel-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: bazel-contrib/setup-bazel@0.8.5
+      with:
+        # Avoid downloading Bazel every time.
+        bazelisk-cache: true
+        # Store build cache per workflow.
+        disk-cache: ${{ github.workflow }}
+        # Share repository cache between workflows.
+        repository-cache: true
+    - run: "bazel test //..."

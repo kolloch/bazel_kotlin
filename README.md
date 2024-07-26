@@ -16,6 +16,10 @@ Usage:
 2. direnv allow
 3. Follow instructions and run `bazel run //env`
 
+## First steps
+
+Run `bazel test //...` to build and test everything in this repo.
+
 ## Update maven_install.json
 
 If you made changes to external jars in [MODULE.bazel](./MODULE.bazel):
