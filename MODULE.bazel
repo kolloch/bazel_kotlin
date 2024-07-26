@@ -16,9 +16,12 @@ bazel_dep(name = "rules_kotlin", version = "1.9.6")
 bazel_dep(name = "bazel_env.bzl", version = "0.1.1")
 bazel_dep(name = "rules_jvm_external", version = "6.2")
 
+include("//:kotest.MODULE.bazel")
+
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
     artifacts = [
+        # Inline artifacts as triples
         "io.ktor:ktor-server-core-jvm:2.3.12",
         "io.ktor:ktor-http:2.3.12",
         "io.ktor:ktor-server-netty-jvm:2.3.12",
@@ -32,162 +35,8 @@ maven.install(
     ],
     resolver = "coursier",
 )
-maven.artifact(
-    artifact = "log4j-api",
-    group = "org.apache.logging.log4j",
-    version = "2.20.0",
-)
-maven.artifact(
-    artifact = "log4j-core",
-    group = "org.apache.logging.log4j",
-    version = "2.20.0",
-)
-maven.artifact(
-    artifact = "log4j-jcl",
-    group = "org.apache.logging.log4j",
-    version = "2.20.0",
-)
-maven.artifact(
-    artifact = "log4j-jul",
-    group = "org.apache.logging.log4j",
-    version = "2.20.0",
-)
-maven.artifact(
-    artifact = "log4j-slf4j-impl",
-    group = "org.apache.logging.log4j",
-    version = "2.20.0",
-)
-maven.artifact(
-    artifact = "log4j-slf4j2-impl",
-    group = "org.apache.logging.log4j",
-    version = "2.20.0",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-assertions-api-jvm",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-assertions-api",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-assertions-core-jvm",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-assertions-core",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-assertions-json-jvm",
-    group = "io.kotest",
-    version = "5.3.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-assertions-shared-jvm",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-assertions-shared",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-common-jvm",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-common",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-extensions-jvm",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-extensions",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-framework-api-jvm",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-framework-api",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-framework-concurrency-jvm",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-framework-concurrency",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-framework-discovery-jvm",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-framework-discovery",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-framework-engine-jvm",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-framework-engine",
-    group = "io.kotest",
-    version = "5.4.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-property-jvm",
-    group = "io.kotest",
-    version = "5.3.2",
-)
-maven.artifact(
-    testonly = True,
-    artifact = "kotest-runner-junit5-jvm",
-    group = "io.kotest",
-    version = "5.4.2",
-)
+
+# Explicit syntax allowing more customization
 maven.artifact(
     testonly = True,
     artifact = "junit-platform-console-standalone",
@@ -208,6 +57,40 @@ maven.artifact(
     artifact = "junit-jupiter-params",
     group = "org.junit.jupiter",
     version = "5.9.0",
+)
+
+# Demo for factoring out versions for Renovate
+LOG4J_VERSION = "2.20.0"
+
+maven.artifact(
+    artifact = "log4j-api",
+    group = "org.apache.logging.log4j",
+    version = LOG4J_VERSION,
+)
+maven.artifact(
+    artifact = "log4j-core",
+    group = "org.apache.logging.log4j",
+    version = LOG4J_VERSION,
+)
+maven.artifact(
+    artifact = "log4j-jcl",
+    group = "org.apache.logging.log4j",
+    version = LOG4J_VERSION,
+)
+maven.artifact(
+    artifact = "log4j-jul",
+    group = "org.apache.logging.log4j",
+    version = LOG4J_VERSION,
+)
+maven.artifact(
+    artifact = "log4j-slf4j-impl",
+    group = "org.apache.logging.log4j",
+    version = LOG4J_VERSION,
+)
+maven.artifact(
+    artifact = "log4j-slf4j2-impl",
+    group = "org.apache.logging.log4j",
+    version = LOG4J_VERSION,
 )
 use_repo(
     maven,
