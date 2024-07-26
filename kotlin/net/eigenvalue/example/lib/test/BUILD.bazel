@@ -24,19 +24,12 @@ java_test(
     use_testrunner = False,
     runtime_deps = [
         ":SomeTest_lib",
-        artifact("org.junit.platform:junit-platform-console-standalone"),  # keep
+        artifact("io.kotest:kotest-runner-junit5-jvm"),
         artifact("org.apache.logging.log4j:log4j-core"),
         artifact("org.apache.logging.log4j:log4j-api"),
         artifact("org.apache.logging.log4j:log4j-slf4j2-impl"),
         artifact("org.junit.jupiter:junit-jupiter-api"),
         artifact("org.junit.jupiter:junit-jupiter-params"),
-        artifact("io.kotest:kotest-assertions-api-jvm"),
-        artifact("io.kotest:kotest-assertions-api"),
-        artifact("io.kotest:kotest-assertions-core-jvm"),
-        artifact("io.kotest:kotest-assertions-core"),
-        artifact("io.kotest:kotest-assertions-json-jvm"),
-        artifact("io.kotest:kotest-assertions-shared-jvm"),
-        artifact("io.kotest:kotest-assertions-shared"),
-        artifact("io.kotest:kotest-runner-junit5-jvm"),
+        artifact("org.junit.platform:junit-platform-console-standalone"),  # keep
     ],
 )
