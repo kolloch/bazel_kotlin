@@ -1,0 +1,9 @@
+load("@rules_kotlin//kotlin:jvm.bzl", "kt_jvm_library")
+load("@rules_java//java:defs.bzl", "java_binary")
+load("@rules_jvm_external//:defs.bzl", "artifact")
+load("@rules_java//java:defs.bzl", "java_library")
+
+kt_jvm_library(
+    name = "example2",
+    srcs = glob(["*.kt"]),
+)
