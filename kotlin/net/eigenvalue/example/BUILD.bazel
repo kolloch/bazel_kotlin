@@ -8,10 +8,10 @@ kt_jvm_library(
     srcs = glob(["*.kt"]),
     deps = [
         "//kotlin/net/eigenvalue/example/lib",
-        artifact('io.ktor:ktor-server-core-jvm'),
-        artifact('io.ktor:ktor-http'),
-        artifact('io.ktor:ktor-server-netty-jvm'),
-        artifact('org.apache.logging.log4j:log4j-api'),
+        artifact("io.ktor:ktor-server-core-jvm"),
+        artifact("io.ktor:ktor-http"),
+        artifact("io.ktor:ktor-server-netty-jvm"),
+        artifact("org.apache.logging.log4j:log4j-api"),
     ],
 )
 
@@ -33,11 +33,11 @@ java_library(
 # > It is appropriate for building workspace utilities. `java_binary` should be preferred for release artefacts.
 java_binary(
     name = "example",
+    main_class = "net.eigenvalue.example.MainKt",
     runtime_deps = [
         ":example_lib",
         ":log4j-config",
-        artifact('org.apache.logging.log4j:log4j-slf4j-impl'),
-        artifact('org.apache.logging.log4j:log4j-slf4j2-impl')
+        artifact("org.apache.logging.log4j:log4j-slf4j-impl"),
+        artifact("org.apache.logging.log4j:log4j-slf4j2-impl"),
     ],
-    main_class = "net.eigenvalue.example.MainKt",
 )

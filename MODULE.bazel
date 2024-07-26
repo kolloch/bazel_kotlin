@@ -3,25 +3,35 @@ module(
     version = "0.1",
 )
 
+bazel_dep(
+    name = "buildifier_prebuilt",
+    version = "6.4.0",
+    dev_dependency = True,
+)
+
 bazel_dep(name = "rules_java", version = "7.6.1")
 bazel_dep(name = "rules_kotlin", version = "1.9.6")
 
+# https://github.com/buildbuddy-io/bazel_env.bzl
+bazel_dep(name = "bazel_env.bzl", version = "0.1.1")
 bazel_dep(name = "rules_jvm_external", version = "6.2")
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
-    resolver = "coursier",
     artifacts = [
         "io.ktor:ktor-server-core-jvm:2.3.12",
         "io.ktor:ktor-http:2.3.12",
         "io.ktor:ktor-server-netty-jvm:2.3.12",
     ],
+    fail_if_repin_required = True,
+    fail_on_missing_checksum = True,
+    fetch_sources = True,
+    lock_file = "@//:rules_jvm_external~~maven~maven_install.json",
     repositories = [
         "https://repo1.maven.org/maven2",
     ],
-    lock_file = "@//:rules_jvm_external~~maven~maven_install.json"
+    resolver = "coursier",
 )
-
 maven.artifact(
     artifact = "log4j-api",
     group = "org.apache.logging.log4j",
@@ -52,7 +62,6 @@ maven.artifact(
     group = "org.apache.logging.log4j",
     version = "2.20.0",
 )
-
 maven.artifact(
     testonly = True,
     artifact = "kotest-assertions-api-jvm",
@@ -200,7 +209,6 @@ maven.artifact(
     group = "org.junit.jupiter",
     version = "5.9.0",
 )
-
 use_repo(
     maven,
     "maven",

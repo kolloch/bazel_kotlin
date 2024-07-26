@@ -3,8 +3,8 @@ load("@rules_jvm_external//:defs.bzl", "artifact")
 
 kt_jvm_library(
     name = "SomeTest_lib",
-    srcs = ["SomeTest.kt"],
     testonly = True,
+    srcs = ["SomeTest.kt"],
     deps = [
         "//kotlin/net/eigenvalue/example/lib",
         artifact("io.kotest:kotest-runner-junit5-jvm"),
@@ -15,9 +15,9 @@ kt_jvm_library(
 
 java_test(
     name = "SomeTest",
+    args = ["--select-class=net.eigenvalue.example.lib.SomeTest"],
     main_class = "org.junit.platform.console.ConsoleLauncher",
     use_testrunner = False,
-    args = ["--select-class=net.eigenvalue.example.lib.SomeTest"],
     runtime_deps = [
         ":SomeTest_lib",
         artifact("org.junit.platform:junit-platform-console-standalone"),  # keep

@@ -1,0 +1,12 @@
+load("@bazel_env.bzl", "bazel_env")
+load(":tools.bzl", "DEV_TOOLS")
+
+_TOOLCHAINS = {
+    "jdk": "@rules_java//toolchains:current_host_java_runtime",
+}
+
+bazel_env(
+    name = "env",
+    toolchains = _TOOLCHAINS,
+    tools = DEV_TOOLS,
+)
